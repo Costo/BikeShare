@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using Enyim.Caching.Memcached;
 
-namespace BikeShare.Entities
+namespace BikeShare.Services.Entities
 {
     [Serializable]
     public class Station

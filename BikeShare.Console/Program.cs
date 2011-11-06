@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BikeShare.Crawlers;
 using System.Threading.Tasks;
 using Enyim.Caching;
-using BikeShare.Entities;
+using BikeShare.Services.Entities;
 using System.Threading;
+using BikeShare.Console.Crawlers;
 
-namespace BikeShare
+namespace BikeShare.Console
 {
     class Program
     {
@@ -20,7 +20,7 @@ namespace BikeShare
 
             montreal.Run().ContinueWith(Continue);
 
-            Console.ReadLine();
+            System.Console.ReadLine();
 
         }
 
