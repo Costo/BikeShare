@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BikeShareReadService.cs" />
+    <Compile Include="BikeShareWriteService.cs" />
+    <Compile Include="Cache.cs" />
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

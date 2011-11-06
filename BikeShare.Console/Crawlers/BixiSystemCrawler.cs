@@ -7,11 +7,17 @@ using BikeShare.Services.Entities;
 using System.Net;
 using System.Xml.Linq;
 using Enyim.Caching.Memcached;
+using BikeShare.Services;
 
 namespace BikeShare.Console.Crawlers
 {
     public abstract class BixiSystemCrawler : ICrawler
     {
+        readonly BikeShareWriteService svc;
+        public BixiSystemCrawler(BikeShareWriteService svc)
+        {
+            this.svc = svc;
+        }
         public abstract string XmlDataUrl { get; }
         public Task Run()
         {
@@ -45,12 +51,8 @@ namespace BikeShare.Console.Crawlers
 
         private void Update(Task<IEnumerable<Station>> t)
         {
-            var stations = t.Result.ToArray();
-            Program.BikeShareCache.Store(StoreMode.Set, "Montreal", stations.Select(x=>x.Id).ToArray());
-            foreach (var s in stations)
-            {
-                Program.BikeShareCache.Store(StoreMode.Set, "station_" + s.Id, s);
-            }
+            svc.Store(t.Result.ToArray());
+            
         }
     }
 }

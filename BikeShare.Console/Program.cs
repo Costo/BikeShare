@@ -7,16 +7,15 @@ using Enyim.Caching;
 using BikeShare.Services.Entities;
 using System.Threading;
 using BikeShare.Console.Crawlers;
+using BikeShare.Services;
 
 namespace BikeShare.Console
 {
     class Program
     {
-        public static MemcachedClient BikeShareCache;
         static void Main(string[] args)
         {
-            BikeShareCache = new MemcachedClient();
-            var montreal = new MontrealBixiCrawler();
+            var montreal = new MontrealBixiCrawler( new BikeShareWriteService()  );
 
             montreal.Run().ContinueWith(Continue);
 
@@ -26,7 +25,7 @@ namespace BikeShare.Console
 
         static void Continue(Task t)
         {
-            Thread.Sleep(60 * 1000);
+            Thread.Sleep(30 * 1000);
             Main(null);
         }
     }

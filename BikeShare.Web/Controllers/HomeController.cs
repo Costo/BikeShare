@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BikeShare.Services;
 
 namespace BikeShare.Web.Controllers
 {
@@ -13,7 +14,13 @@ namespace BikeShare.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var svc = new BikeShareReadService();
+            var stations = svc.GetStations();
+
+            var bikeCount = stations.Sum(x => x.BikesAvailable);
+
+            return View(bikeCount);
+            
         }
 
     }
