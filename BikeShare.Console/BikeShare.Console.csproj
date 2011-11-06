@@ -50,12 +50,17 @@
     <Compile Include="Crawlers\BixiSystemCrawler.cs" />
     <Compile Include="Crawlers\ICrawler.cs" />
     <Compile Include="Crawlers\MontrealBixiCrawler.cs" />
-    <Compile Include="Entities\Station.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BikeShare.Services\BikeShare.Services.csproj">
+      <Project>{037904BC-92FB-45EE-B401-CC2793CFA3ED}</Project>
+      <Name>BikeShare.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

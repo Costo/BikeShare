@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShare.Console", "BikeSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShare.Web", "BikeShare.Web\BikeShare.Web.csproj", "{70853F60-550C-468D-BE31-9F6EA431A0BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShare.Services", "BikeShare.Services\BikeShare.Services.csproj", "{037904BC-92FB-45EE-B401-CC2793CFA3ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{70853F60-550C-468D-BE31-9F6EA431A0BF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{70853F60-550C-468D-BE31-9F6EA431A0BF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{70853F60-550C-468D-BE31-9F6EA431A0BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{037904BC-92FB-45EE-B401-CC2793CFA3ED}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
