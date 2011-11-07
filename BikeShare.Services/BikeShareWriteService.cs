@@ -9,13 +9,9 @@ namespace BikeShare.Services
 {
     public class BikeShareWriteService
     {
-        public void Store(Station[] stations)
+        public void Store(string system, Station[] stations)
         {
-            Cache.Client.Store(StoreMode.Set, "stations", stations.Select(x => x.Id).ToArray());
-            foreach (var s in stations)
-            {
-                Cache.Client.Store(StoreMode.Set, "station_" + s.Id, s);
-            }
+            Cache.Client.Store(StoreMode.Set, "system_" + system, stations);
         }
     }
 }

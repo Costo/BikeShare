@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<div class="page-header">
+    <h1>Data</h1>
+</div>
+<div class="row">
+    <div class="span16">
+        <table>
+            @foreach (var s in Model.Stations) {
+                <tr>
+                    <td>@s.Id</td>
+                    <td>@s.Name</td>
+                    <td>@s.BikesAvailable</td>
+                    <td>@s.DocksAvailable</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+

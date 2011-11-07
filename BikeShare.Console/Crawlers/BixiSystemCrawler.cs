@@ -19,9 +19,18 @@ namespace BikeShare.Console.Crawlers
             this.svc = svc;
         }
         public abstract string XmlDataUrl { get; }
+        private string systemId;
+        public string SystemId
+        {
+            get
+            {
+                return systemId
+                    ?? (systemId = GetType().Name.Replace("Crawler", string.Empty).ToLowerInvariant());
+            }
+        }
         public Task Run()
         {
-            System.Console.WriteLine("starting task");
+            System.Console.WriteLine(SystemId + ": starting");
 
             return Fetch()
                 .ContinueWith<IEnumerable<Station>>(Parse)
@@ -31,19 +40,21 @@ namespace BikeShare.Console.Crawlers
 
         private Task<string> Fetch()
         {
+            System.Console.WriteLine(SystemId + ": fetching " + XmlDataUrl);
             var tcs = new TaskCompletionSource<string>();
             var webClient = new WebClient();
             webClient.DownloadStringCompleted += (s, e) =>
             {
                 tcs.SetResult(e.Result);
             };
+            webClient.Encoding = Encoding.UTF8;
             webClient.DownloadStringAsync(new Uri(XmlDataUrl));
             return tcs.Task;
         }
 
         private IEnumerable<Station> Parse(Task<string> t)
         {
-            System.Console.WriteLine("Result length: " + t.Result.Length);
+            System.Console.WriteLine(SystemId + ": parsing " + t.Result.Length + " bytes");
             var xml = XDocument.Parse(t.Result);
             return from s in xml.Root.Elements("station")
                    select Station.FromXml(s);
@@ -51,7 +62,10 @@ namespace BikeShare.Console.Crawlers
 
         private void Update(Task<IEnumerable<Station>> t)
         {
-            svc.Store(t.Result.ToArray());
+            var stations = t.Result.ToArray();
+            System.Console.WriteLine(SystemId + ": storing " + stations.Length + " stations");
+
+            svc.Store(this.SystemId, stations);
             
         }
     }

@@ -8,6 +8,7 @@ using BikeShare.Services.Entities;
 using System.Threading;
 using BikeShare.Console.Crawlers;
 using BikeShare.Services;
+using BikeShare.Crawlers;
 
 namespace BikeShare.Console
 {
@@ -15,18 +16,36 @@ namespace BikeShare.Console
     {
         static void Main(string[] args)
         {
-            var montreal = new MontrealBixiCrawler( new BikeShareWriteService()  );
+            var svc = new BikeShareWriteService();
+            var montreal = new MontrealBixiCrawler(svc);
+            var toronto = new TorontoBixiCrawler(svc);
+            var washington = new CapitalBikeShareCrawler(svc);
+            var boston = new HubwayCrawler(svc);
+            var minneapolis = new NiceRideMNCrawler(svc);
+            
+            //var london = new BarclaysCycleHireCrawler();
 
-            montreal.Run().ContinueWith(Continue);
+            while (true)
+            {
+                var t = Task.Factory.ContinueWhenAll( new[] { minneapolis.Run(), montreal.Run(),toronto.Run(), washington.Run(), boston.Run() }, Continue  );
+
+
+                Task.WaitAll(t);
+            }
+
+
 
             System.Console.ReadLine();
 
         }
 
-        static void Continue(Task t)
+        static void Continue(Task[] t)
         {
-            Thread.Sleep(30 * 1000);
-            Main(null);
+            int t1, t2;
+            ThreadPool.GetAvailableThreads(out t1, out t2);
+            Thread.Sleep(60 * 1000);
+            System.Console.WriteLine("w:" + t1);
+            System.Console.WriteLine("c:" + t2);
         }
     }
 }

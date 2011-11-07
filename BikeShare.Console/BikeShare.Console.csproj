@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,9 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crawlers\BarclaysCycleHireCrawler.cs" />
     <Compile Include="Crawlers\BixiSystemCrawler.cs" />
+    <Compile Include="Crawlers\CapitalBikeShareCrawler.cs" />
+    <Compile Include="Crawlers\HubwayCrawler.cs" />
     <Compile Include="Crawlers\ICrawler.cs" />
     <Compile Include="Crawlers\MontrealBixiCrawler.cs" />
+    <Compile Include="Crawlers\NiceRideMNCrawler.cs" />
+    <Compile Include="Crawlers\TorontoBixiCrawler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

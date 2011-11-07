@@ -1,6 +1,16 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
-<h1>@Model</h1>
-
+<div class="page-header">
+    <h1>Bike Share API</h1>
+</div>
+<div class="row">
+    <div class="span16">
+        <ul>
+            <li>@Html.ActionLink("Montreal Bixi", "System", new { id="montrealbixi"})</li>
+            <li>@Html.ActionLink("Toronto Bixi", "System", new { id="torontobixi"})</li>
+            <li>@Html.ActionLink("Capital Bike Share", "System", new { id="capitalbikeshare"})</li>
+            <li>@Html.ActionLink("Hubway", "System", new { id="hubway"})</li>
+        </ul>
+    </div>
+</div>

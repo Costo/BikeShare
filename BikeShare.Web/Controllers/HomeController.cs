@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BikeShare.Services;
+using System.Dynamic;
 
 namespace BikeShare.Web.Controllers
 {
@@ -14,13 +15,18 @@ namespace BikeShare.Web.Controllers
 
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult System(string id)
+        {
             var svc = new BikeShareReadService();
-            var stations = svc.GetStations();
+            var stations = svc.GetStations(id).ToArray();
 
-            var bikeCount = stations.Sum(x => x.BikesAvailable);
+            dynamic model = new ExpandoObject();
+            model.Stations = stations;
 
-            return View(bikeCount);
-            
+            return View(model);
         }
 
     }

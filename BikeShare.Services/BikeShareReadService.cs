@@ -8,15 +8,10 @@ namespace BikeShare.Services
 {
     public class BikeShareReadService
     {
-        public IEnumerable<Station> GetStations()
+        public IEnumerable<Station> GetStations(string system)
         {
-            var stations = Cache.Client.Get<int[]>("stations");
-            if (stations == null) yield break;
-            foreach(var id in stations )
-            {
-                var station = Cache.Client.Get<Station>("station_" + id);
-                if (station != null) yield return station;
-            }
+            return Cache.Client.Get<Station[]>("system_" + system)
+                ?? Enumerable.Empty<Station>();
         }
     }
 }

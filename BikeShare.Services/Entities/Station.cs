@@ -35,9 +35,5 @@ namespace BikeShare.Services.Entities
             return station;
         }
 
-        public void Store()
-        {
-        }
-
     }
 }
