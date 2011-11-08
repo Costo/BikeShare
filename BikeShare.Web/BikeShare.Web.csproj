@@ -88,7 +88,6 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="packages.config" />
     <None Include="Views\Home\System.cshtml" />
   </ItemGroup>
   <ItemGroup>
