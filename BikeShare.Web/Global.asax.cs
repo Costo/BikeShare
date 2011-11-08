@@ -26,6 +26,12 @@ namespace BikeShare.Web
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
+            routes.MapRoute(
+                "Near",
+                "Api/{id}/near/{latitude},{longitude}/radius/{radius}",
+                new { controller = "Api", action = "Near" }
+            );
+
 
         }
 

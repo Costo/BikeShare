@@ -29,7 +29,7 @@ namespace BikeShare.Console
             {
                 var t = Task.Factory.ContinueWhenAll( new[] { minneapolis.Run(), montreal.Run(),toronto.Run(), washington.Run(), boston.Run() }, Continue  );
 
-
+             
                 Task.WaitAll(t);
             }
 
@@ -39,13 +39,16 @@ namespace BikeShare.Console
 
         }
 
-        static void Continue(Task[] t)
+        static void Continue(Task[] tasks)
         {
-            int t1, t2;
-            ThreadPool.GetAvailableThreads(out t1, out t2);
+            foreach (var t in tasks)
+            {
+                if (t.IsFaulted)
+                {
+                    System.Console.WriteLine(t.Exception.Message);
+                }
+            }
             Thread.Sleep(60 * 1000);
-            System.Console.WriteLine("w:" + t1);
-            System.Console.WriteLine("c:" + t2);
         }
     }
 }
