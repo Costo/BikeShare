@@ -8,13 +8,23 @@ namespace BikeShare.Services
 {
     public static class Cache
     {
-        private static MemcachedClient client = new MemcachedClient();
+        static MemcachedClient client;
         public static MemcachedClient Client
         {
             get
             {
-                return client;
+                return client
+                    ?? ( client = new MemcachedClient());
             }
+        }
+
+        public static void Initialize(Enyim.Caching.Configuration.MemcachedClientConfiguration config)
+        {
+            if (client != null)
+            {
+                throw new Exception("MemcachedClient has already been initialized");
+            }
+            client = new MemcachedClient(config);
         }
     }
 }

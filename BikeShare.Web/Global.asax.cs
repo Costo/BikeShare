@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Enyim.Caching.Configuration;
+using System.Configuration;
+using BikeShare.Services;
 
 namespace BikeShare.Web
 {
@@ -41,6 +44,17 @@ namespace BikeShare.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            InitializeMemcachedClient();
+        }
+
+        private void InitializeMemcachedClient()
+        {
+            var config = new MemcachedClientConfiguration();
+            var address = ConfigurationManager.AppSettings.Get("MemcachedAddress");
+            var port = Convert.ToInt32(ConfigurationManager.AppSettings.Get("MemcachedPort"));
+            config.AddServer(address, port);
+            Cache.Initialize(config);
         }
     }
 }
