@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=cec98615db04012e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Enyim.Caching\Enyim.Caching.dll</HintPath>
@@ -88,6 +91,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="packages.config" />
     <None Include="Views\Home\System.cshtml" />
   </ItemGroup>
   <ItemGroup>
