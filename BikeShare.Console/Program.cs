@@ -17,38 +17,20 @@ namespace BikeShare.Console
         static void Main(string[] args)
         {
             var svc = new BikeShareWriteService();
-            var montreal = new MontrealBixiCrawler(svc);
-            var toronto = new TorontoBixiCrawler(svc);
-            var washington = new CapitalBikeShareCrawler(svc);
-            var boston = new HubwayCrawler(svc);
-            var minneapolis = new NiceRideMNCrawler(svc);
+            var crawlers = new ICrawler[] {
+                new MontrealBixiCrawler(svc),
+                new TorontoBixiCrawler(svc),
+                new CapitalBikeShareCrawler(svc),
+                new HubwayCrawler(svc),
+                new NiceRideMNCrawler(svc),
+                new VelovCrawler(svc)
+            };
             
-            //var london = new BarclaysCycleHireCrawler();
-
-            while (true)
-            {
-                var t = Task.Factory.ContinueWhenAll( new[] { minneapolis.Run(), montreal.Run(),toronto.Run(), washington.Run(), boston.Run() }, Continue  );
-
-             
-                Task.WaitAll(t);
-            }
-
-
+            
+            Parallel.ForEach(crawlers, x => x.Run()); 
 
             System.Console.ReadLine();
 
-        }
-
-        static void Continue(Task[] tasks)
-        {
-            foreach (var t in tasks)
-            {
-                if (t.IsFaulted)
-                {
-                    System.Console.WriteLine(t.Exception.Message);
-                }
-            }
-            Thread.Sleep(60 * 1000);
         }
     }
 }

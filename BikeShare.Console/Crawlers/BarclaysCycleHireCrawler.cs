@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace BikeShare.Crawlers
 {
-    public class BarclaysCycleHireCrawler : ICrawler
+    public class BarclaysCycleHireCrawler 
     {
         public System.Threading.Tasks.Task Run()
         {

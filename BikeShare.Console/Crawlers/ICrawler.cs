@@ -8,6 +8,11 @@ namespace BikeShare.Console.Crawlers
 {
     public interface ICrawler
     {
-        Task Run();
+        void Run();
+    }
+
+    public interface ICrawler<T>
+    {
+        Task<T> Run();
     }
 }

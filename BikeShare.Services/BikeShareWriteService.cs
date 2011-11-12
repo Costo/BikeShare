@@ -13,5 +13,10 @@ namespace BikeShare.Services
         {
             Cache.Client.Store(StoreMode.Set, "system_" + system, stations);
         }
+
+        public void Store(string system, Station station)
+        {
+            Cache.Client.Store(StoreMode.Set, "system_" + system + "_station_" + station.Id, station);
+        }
     }
 }

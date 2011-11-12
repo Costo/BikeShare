@@ -8,6 +8,8 @@ using System.Net;
 using System.Xml.Linq;
 using Enyim.Caching.Memcached;
 using BikeShare.Services;
+using System.Threading;
+using BikeShare.Crawlers;
 
 namespace BikeShare.Console.Crawlers
 {
@@ -28,41 +30,46 @@ namespace BikeShare.Console.Crawlers
                     ?? (systemId = GetType().Name.Replace("Crawler", string.Empty).ToLowerInvariant());
             }
         }
-        public Task Run()
+        public void Run()
         {
-            System.Console.WriteLine(SystemId + ": starting");
+            while (true)
+            {
+                var fetch = Fetch();
+                var parse = fetch.ContinueWith<Station[]>(Parse, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously);
+                var update = parse.ContinueWith(Update, TaskContinuationOptions.OnlyOnRanToCompletion);
 
-            return Fetch()
-                .ContinueWith<IEnumerable<Station>>(Parse)
-                .ContinueWith(Update);
-
+                try
+                {
+                    Task.WaitAll(fetch, parse, update);
+                }
+                catch (AggregateException e)
+                {
+                    e.Handle(x =>
+                    {
+                        System.Console.WriteLine(x.Message);
+                        return true;
+                    });
+                }
+                Thread.Sleep(TimeSpan.FromMinutes(1d));
+            }
         }
 
         private Task<string> Fetch()
         {
             System.Console.WriteLine(SystemId + ": fetching " + XmlDataUrl);
-            var tcs = new TaskCompletionSource<string>();
-            var webClient = new WebClient();
-            webClient.DownloadStringCompleted += (s, e) =>
-            {
-                tcs.SetResult(e.Result);
-            };
-            webClient.Encoding = Encoding.UTF8;
-            webClient.DownloadStringAsync(new Uri(XmlDataUrl));
-            return tcs.Task;
+            return CommonTasks.DownloadString(new Uri(XmlDataUrl));
         }
 
-        private IEnumerable<Station> Parse(Task<string> t)
+        private Station[] Parse(Task<string> t)
         {
-            System.Console.WriteLine(SystemId + ": parsing " + t.Result.Length + " bytes");
             var xml = XDocument.Parse(t.Result);
-            return from s in xml.Root.Elements("station")
-                   select Station.FromXml(s);
+            return (from s in xml.Root.Elements("station")
+                   select Station.FromXml(s)).ToArray();
         }
 
-        private void Update(Task<IEnumerable<Station>> t)
+        private void Update(Task<Station[]> t)
         {
-            var stations = t.Result.ToArray();
+            var stations = t.Result;
             System.Console.WriteLine(SystemId + ": storing " + stations.Length + " stations");
 
             svc.Store(this.SystemId, stations);

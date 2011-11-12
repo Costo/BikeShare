@@ -38,6 +38,9 @@
     <Reference Include="Enyim.Caching">
       <HintPath>..\Dependencies\Enyim.Caching\Enyim.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -51,16 +54,22 @@
     <Compile Include="Crawlers\BarclaysCycleHireCrawler.cs" />
     <Compile Include="Crawlers\BixiSystemCrawler.cs" />
     <Compile Include="Crawlers\CapitalBikeShareCrawler.cs" />
+    <Compile Include="Crawlers\CommonTasks.cs" />
     <Compile Include="Crawlers\HubwayCrawler.cs" />
     <Compile Include="Crawlers\ICrawler.cs" />
     <Compile Include="Crawlers\MontrealBixiCrawler.cs" />
     <Compile Include="Crawlers\NiceRideMNCrawler.cs" />
     <Compile Include="Crawlers\TorontoBixiCrawler.cs" />
+    <Compile Include="Crawlers\VelovCrawler.cs" />
+    <Compile Include="Crawlers\VelovStationCrawler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BikeShare.Services\BikeShare.Services.csproj">
