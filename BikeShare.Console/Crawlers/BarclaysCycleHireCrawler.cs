@@ -6,50 +6,79 @@ using BikeShare.Console.Crawlers;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Threading;
+using BikeShare.Services.Entities;
+using System.Diagnostics;
+using BikeShare.Services;
 
 namespace BikeShare.Crawlers
 {
-    public class BarclaysCycleHireCrawler 
+    public class BarclaysCycleHireCrawler : ICrawler
     {
-        public System.Threading.Tasks.Task Run()
+        readonly BikeShareWriteService svc;
+        public BarclaysCycleHireCrawler(BikeShareWriteService svc)
         {
-            System.Console.WriteLine("barclayscyclehire" + ": starting");
-            var tcs = new TaskCompletionSource<string>();
-            Thread t = new Thread(() =>
+            this.svc = svc;
+        }
+        public void Run()
+        {
+            while (true)
+            {
+                var fetch = Fetch();
+                var parse = fetch.ContinueWith<Station[]>(Parse, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously);
+                var update = parse.ContinueWith(Update, TaskContinuationOptions.OnlyOnRanToCompletion);
+
+                try
                 {
-
-                    WebBrowser browser = new WebBrowser();
-                    browser.Navigating += (s, e) =>
+                    Task.WaitAll(fetch, parse, update);
+                }
+                catch (AggregateException e)
+                {
+                    e.Handle(x =>
                     {
-                        System.Console.WriteLine("Navigating");
+                        System.Console.WriteLine(x.Message);
+                        return true;
+                    });
+                }
+                Thread.Sleep(TimeSpan.FromMinutes(1d));
+            }
+        }
 
-                    };
-                    browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
-                    browser.Navigated += (s, e) =>
-                        {
-                            System.Console.WriteLine("Navigated");
-                            browser.Dispose();
-                            tcs.SetResult("hello");
-                        };
-                    browser.Navigate("https://web.barclayscyclehire.tfl.gov.uk/maps");
+        private Task<string> Fetch()
+        {
+            System.Console.WriteLine("barclayscyclehire: fetching");
+
+            return CommonTasks.ExecuteScript( "C:\\Dev\\BikeShare\\BikeShare.Node\\BarclaysCycleHire.js" );
+        }
+
+        private Station[] Parse(Task<string> t)
+        {
+            System.Console.WriteLine("barclayscyclehire: parsing " + t.Result.Length + " bytes");
+            var stations = new List<Station>();
+            dynamic json = Newtonsoft.Json.JsonConvert.DeserializeObject(t.Result);
+            foreach (var m in json)
+            {
+                var station = m.station;
+                stations.Add(new Station((int)station.id)
+                {
+                    Latitude = (double)station.lat,
+                    Longitude = (double)station.@long,
+                    Name = station.name,
+                    BikesAvailable = station.nbBikes,
+                    DocksAvailable = station.nbEmptyDocks
 
                 });
-            t.SetApartmentState(ApartmentState.STA);
-            t.Start();
-
-            return tcs.Task.ContinueWith(Continue);
+            }
+            return stations.ToArray();
         }
 
-        void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void Update(Task<Station[]> t)
         {
-            System.Console.WriteLine("Document completed");
-        }
+            var stations = t.Result;
+            System.Console.WriteLine("barclayscyclehire: storing " + stations.Length + " stations");
 
-
-
-        void Continue(Task<string> t)
-        {
+            svc.Store("barclayscyclehire", stations);
 
         }
+
     }
 }

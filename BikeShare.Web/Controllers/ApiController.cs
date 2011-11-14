@@ -17,8 +17,10 @@ namespace BikeShare.Web.Controllers
                 {
                     new { Id="montrealbixi", Name="Montreal Bixi", data= Url.Action("System", new { id="montrealbixi"}) },
                     new { Id="torontbixi", Name="Toronto Bixi", data= Url.Action("System", new { id="torontbixi"}) },
-                    new { Id="capitalbikeshare", Name="Cspital Bike Share", data= Url.Action("System", new { id="capitalbikeshare"}) },
+                    new { Id="capitalbikeshare", Name="Capital Bike Share", data= Url.Action("System", new { id="capitalbikeshare"}) },
                     new { Id="hubway", Name="Hubway", data= Url.Action("System", new { id="hubway"}) },
+                    new { Id="niceridemn", Name="Nice Ride MN", data= Url.Action("System", new { id="niceridemn"}) },
+                    new { Id="velov", Name="Velov", data= Url.Action("System", new { id="velov"}) },
                 };
             
             return Json(systems, JsonRequestBehavior.AllowGet); 

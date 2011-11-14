@@ -18,12 +18,13 @@ namespace BikeShare.Console
         {
             var svc = new BikeShareWriteService();
             var crawlers = new ICrawler[] {
-                new MontrealBixiCrawler(svc),
-                new TorontoBixiCrawler(svc),
-                new CapitalBikeShareCrawler(svc),
-                new HubwayCrawler(svc),
-                new NiceRideMNCrawler(svc),
-                new VelovCrawler(svc)
+                //new MontrealBixiCrawler(svc),
+                //new TorontoBixiCrawler(svc),
+                //new CapitalBikeShareCrawler(svc),
+                //new HubwayCrawler(svc),
+                //new NiceRideMNCrawler(svc),
+                //new VelovCrawler(svc),
+                new BarclaysCycleHireCrawler(svc),
             };
             
             
