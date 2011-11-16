@@ -34,7 +34,7 @@ namespace BikeShare.Console.Crawlers
         {
             while (true)
             {
-                var fetch = Fetch();
+                var fetch = CommonTasks.DownloadString(new Uri(XmlDataUrl));
                 var parse = fetch.ContinueWith<Station[]>(Parse, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously);
                 var update = parse.ContinueWith(Update, TaskContinuationOptions.OnlyOnRanToCompletion);
 
@@ -52,12 +52,6 @@ namespace BikeShare.Console.Crawlers
                 }
                 Thread.Sleep(TimeSpan.FromMinutes(1d));
             }
-        }
-
-        private Task<string> Fetch()
-        {
-            System.Console.WriteLine(SystemId + ": fetching " + XmlDataUrl);
-            return CommonTasks.DownloadString(new Uri(XmlDataUrl));
         }
 
         private Station[] Parse(Task<string> t)

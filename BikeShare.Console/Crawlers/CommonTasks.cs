@@ -12,7 +12,7 @@ namespace BikeShare.Crawlers
     {
         public static Task<string> DownloadString(Uri uri)
         {
-
+            System.Console.WriteLine("fetching: " + uri);
             var tcs = new TaskCompletionSource<string>();
             var webClient = new WebClient();
             webClient.DownloadStringCompleted += (s, e) =>

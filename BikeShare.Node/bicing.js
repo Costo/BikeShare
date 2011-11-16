@@ -2,7 +2,7 @@ var http = require('http'),
    vm = require('vm');
 
 var markers = [];
-var latlng;
+var latlong;
 
 http.get({ host: 'www.bicing.cat', path: '/localizaciones/localizaciones.php'}, function(res) {
    //console.log("statusCode: ", res.statusCode);
@@ -19,7 +19,7 @@ http.get({ host: 'www.bicing.cat', path: '/localizaciones/localizaciones.php'}, 
          {
             sandbox = {
                GBrowserIsCompatible: function(){ return true; },
-               GLatLng: fakeGLatLong,
+               GLatLng: function(lat, long){ this.lat = lat; this.long = long; },
                GIcon: function(){},
                GSize: function(){},
                GPoint: function(){},
@@ -29,7 +29,7 @@ http.get({ host: 'www.bicing.cat', path: '/localizaciones/localizaciones.php'}, 
                      arguments[2]();
                   }
                },
-               GMarker: function(){},
+               GMarker: fakeGMarker,
                GMap2: function(){
                   this.addControl = function(){};
                   this.enableScrollWheelZoom = function(){};
@@ -61,9 +61,8 @@ http.get({ host: 'www.bicing.cat', path: '/localizaciones/localizaciones.php'}, 
    console.error(e);
 });
 
-function fakeGLatLong(lat, lng)
-{
-   markers.push({ lat:lat, lng:lng });
+function fakeGMarker(point) {
+   markers.push(point);  
 }
 
 function fakeAjax(options)
