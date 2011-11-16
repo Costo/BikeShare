@@ -38,6 +38,9 @@
     <Reference Include="Enyim.Caching">
       <HintPath>..\Dependencies\Enyim.Caching\Enyim.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\Dependencies\HtmlAgilityPack\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -78,6 +81,15 @@
       <Project>{037904BC-92FB-45EE-B401-CC2793CFA3ED}</Project>
       <Name>BikeShare.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Crawlers\Scripts\BarclaysCycleHire.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Crawlers\Scripts\Bicing.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

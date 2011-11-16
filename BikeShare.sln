@@ -14,6 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enyim.Caching", "Enyim.Cach
 		Dependencies\Enyim.Caching\Enyim.Caching.dll = Dependencies\Enyim.Caching\Enyim.Caching.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HtmlAgilityPack", "HtmlAgilityPack", "{1BC5366F-05D1-4B30-AE1E-50D252957914}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\HtmlAgilityPack\HtmlAgilityPack.dll = Dependencies\HtmlAgilityPack\HtmlAgilityPack.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +65,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C2DB75E6-A0B6-471B-81C7-2A2EC8064383} = {E19A64AA-7027-4933-91A2-391EA611405E}
+		{1BC5366F-05D1-4B30-AE1E-50D252957914} = {E19A64AA-7027-4933-91A2-391EA611405E}
 	EndGlobalSection
 EndGlobal

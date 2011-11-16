@@ -23,7 +23,7 @@ namespace BikeShare.Crawlers
         {
             while (true)
             {
-                var fetch = CommonTasks.ExecuteScript("C:\\Dev\\BikeShare\\BikeShare.Node\\BarclaysCycleHire.js");
+                var fetch = CommonTasks.ExecuteScript("Crawlers\\Scripts\\BarclaysCycleHire.js");
                 var parse = fetch.ContinueWith<Station[]>(Parse, TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously);
                 var update = parse.ContinueWith(Update, TaskContinuationOptions.OnlyOnRanToCompletion);
 
