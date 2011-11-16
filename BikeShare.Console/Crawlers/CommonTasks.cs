@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace BikeShare.Crawlers
 {
@@ -12,7 +13,7 @@ namespace BikeShare.Crawlers
     {
         public static Task<string> DownloadString(Uri uri)
         {
-            System.Console.WriteLine("fetching: " + uri);
+            System.Console.WriteLine("get: " + uri);
             var tcs = new TaskCompletionSource<string>();
             var webClient = new WebClient();
             webClient.DownloadStringCompleted += (s, e) =>
@@ -31,6 +32,8 @@ namespace BikeShare.Crawlers
             webClient.DownloadStringAsync(uri);
             return tcs.Task;
         }
+
+        
 
         public static Task<string> ExecuteScript(string path)
         {
