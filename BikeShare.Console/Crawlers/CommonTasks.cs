@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using System.Configuration;
 
 namespace BikeShare.Crawlers
 {
@@ -37,12 +38,11 @@ namespace BikeShare.Crawlers
 
         public static Task<string> ExecuteScript(string path)
         {
-            const string nodePath = "C:\\Program Files (x86)\\nodejs\\node.exe";
             var tcs = new TaskCompletionSource<string>();
             var result = new StringBuilder();
             var process = new Process();
             process.StartInfo.Arguments = path;
-            process.StartInfo.FileName = nodePath;
+            process.StartInfo.FileName = ConfigurationManager.AppSettings["nodePath"];
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
             process.EnableRaisingEvents = true;
